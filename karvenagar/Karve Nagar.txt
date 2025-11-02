@@ -1,0 +1,314 @@
+[
+  {
+    "id": 1,
+    "title": "Sunrise Girls PG, Viman Nagar",
+    "area": "Karve Nagar",
+    "type": "Girls PG",
+    "price": 8500,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "24x7 Water",
+      "Hot Water",
+      "Daily Cleaning"
+    ],
+    "img": "./1.png",
+    "badge": "Budget",
+    "meta": "Close to Phoenix Marketcity",
+    "amenities": [
+      "Bed with Mattress",
+      "Locker",
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Induction",
+      "Study Lamp",
+      "Charging Point"
+    ],
+    "vacancy": 3,
+    "deposit": 8500,
+    "contact": [
+      "+919900110006"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Greenway Boys Hostel, Kothrud",
+    "area": "Karve Nagar",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 4500,
+      "lower_bed": 5000
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Free WiFi",
+      "CCTV",
+      "Two-wheeler Parking"
+    ],
+    "img": "./2.png",
+    "badge": "Economy",
+    "meta": "Near MIT College",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning",
+      "Study Table"
+    ],
+    "vacancy": 4,
+    "deposit": 2000,
+    "contact": [
+      "+919900110007"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Maple Residency PG, Hadapsar",
+    "area": "Karve Nagar",
+    "type": "PG",
+    "price": 7500,
+    "furnish": "Furnished",
+    "chips": [
+      "24x7 Water",
+      "Electricity Included"
+    ],
+    "img": "./3.png",
+    "badge": "Value",
+    "meta": "Near Magarpatta",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "Induction Stove",
+      "Study Lamp"
+    ],
+    "vacancy": 5,
+    "deposit": 7500,
+    "contact": [
+      "+919900110008"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Comfort Boys Hostel, Deccan",
+    "area": "Karve Nagar",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 6000
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "CCTV"
+    ],
+    "img": "./4.png",
+    "badge": "Central",
+    "meta": "Near Deccan Gymkhana",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 2,
+    "deposit": 3000,
+    "contact": [
+      "+919900110009"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Lotus Girls PG, Shivajinagar",
+    "area": "Karve Nagar",
+    "type": "Girls PG",
+    "price": 9200,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Study Table",
+      "Daily Cleaning"
+    ],
+    "img": "./5.png",
+    "badge": "Premium",
+    "meta": "Near FC Road",
+    "amenities": [
+      "Bed & Mattress",
+      "Locker",
+      "Fridge",
+      "Washing Machine",
+      "Induction"
+    ],
+    "vacancy": 2,
+    "deposit": 9200,
+    "contact": [
+      "+919900110010"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Vista Boys Hostel, Pimpri",
+    "area": "Karve Nagar",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 3800,
+      "lower_bed": 4200
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Two-wheeler Parking",
+      "WiFi"
+    ],
+    "img": "./6.png",
+    "badge": "Budget",
+    "meta": "Near Pimpri Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "CCTV",
+      "Lockers"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110011"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Harmony Girls PG, Baner",
+    "area": "Karve Nagar",
+    "type": "Girls PG",
+    "price": 11000,
+    "furnish": "Furnished",
+    "chips": [
+      "24x7 Water",
+      "WiFi",
+      "Electricity Included"
+    ],
+    "img": "./7.png",
+    "badge": "Premium",
+    "meta": "Near Baner Road",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "Induction"
+    ],
+    "vacancy": 2,
+    "deposit": 11000,
+    "contact": [
+      "+919900110012"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Central Hub PG, Aundh",
+    "area": "Karve Nagar",
+    "type": "PG",
+    "price": 9800,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Study Lamp"
+    ],
+    "img": "./8.png",
+    "badge": "Value",
+    "meta": "Near Aundh Market",
+    "amenities": [
+      "Locker",
+      "Geyser",
+      "RO Water",
+      "Washing Machine"
+    ],
+    "vacancy": 4,
+    "deposit": 5000,
+    "contact": [
+      "+919900110013"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "SafeStay Boys Hostel, Narayan Peth",
+    "area": "Karve Nagar",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 5200
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "CCTV",
+      "Daily Cleaning"
+    ],
+    "img": "./9.png",
+    "badge": "Central",
+    "meta": "Near Narayan Peth Market",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Lamp"
+    ],
+    "vacancy": 3,
+    "deposit": 2500,
+    "contact": [
+      "+919900110014"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "BlueSky Girls PG, Kondhwa",
+    "area": "Karve Nagar",
+    "type": "Girls PG",
+    "price": 6800,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Two-wheeler Parking"
+    ],
+    "img": "./10.png",
+    "badge": "Economy",
+    "meta": "Near Kondhwa Road",
+    "amenities": [
+      "Washing Machine",
+      "Fridge",
+      "RO Water",
+      "Induction"
+    ],
+    "vacancy": 5,
+    "deposit": 2000,
+    "contact": [
+      "+919900110015"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Elite Boys Hostel, FC Road",
+    "area": "Karve Nagar",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 7000,
+      "lower_bed": 7600
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Quiet Environment"
+    ],
+    "img": "./11.png",
+    "badge": "Premium",
+    "meta": "Close to FC College",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Study Table",
+      "Lockers",
+      "CCTV"
+    ],
+    "vacancy": 2,
+    "deposit": 4000,
+    "contact": [
+      "+919900110016"
+    ]
+  }
+]
