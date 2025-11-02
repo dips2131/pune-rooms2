@@ -1,0 +1,304 @@
+[
+  {
+    "id": 1,
+    "title": "RiverView PG, Kalyani Nagar",
+    "area": "Kothrud",
+    "type": "PG",
+    "price": 14000,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Electricity Included",
+      "24x7 Water"
+    ],
+    "img": "./1.png",
+    "badge": "Premium",
+    "meta": "Near Phoenix Marketcity",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Lamp",
+      "Induction"
+    ],
+    "vacancy": 1,
+    "deposit": 14000,
+    "contact": [
+      "+919900110017"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Campus Corner Boys Hostel, Yerawada",
+    "area": "Kothrud",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 3300,
+      "lower_bed": 3700
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./2.png",
+    "badge": "Economy",
+    "meta": "Near Yerawada Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 8,
+    "deposit": 1500,
+    "contact": [
+      "+919900110018"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Pearl Girls PG, Sadashiv Peth",
+    "area": "Kothrud",
+    "type": "Girls PG",
+    "price": 7600,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Daily Cleaning"
+    ],
+    "img": "./3.png",
+    "badge": "Value",
+    "meta": "Near Laxmi Road",
+    "amenities": [
+      "Bed & Mattress",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 4,
+    "deposit": 7600,
+    "contact": [
+      "+919900110019"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "UrbanStay Boys PG, Hadapsar",
+    "area": "Kothrud",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 4700
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "CCTV"
+    ],
+    "img": "./4.png",
+    "badge": "Budget",
+    "meta": "Near Hadapsar Industrial Area",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Washing Machine"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110020"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cosy Nook Girls PG, Camp",
+    "area": "Kothrud",
+    "type": "Girls PG",
+    "price": 10000,
+    "furnish": "Furnished",
+    "chips": [
+      "Electricity Included",
+      "WiFi"
+    ],
+    "img": "./5.png",
+    "badge": "Central",
+    "meta": "Near Camp Market",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 3,
+    "deposit": 10000,
+    "contact": [
+      "+919900110021"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Metro Boys Hostel, Viman Nagar",
+    "area": "Kothrud",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 5900,
+      "lower_bed": 6300
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "Near Metro",
+      "WiFi"
+    ],
+    "img": "./6.png",
+    "badge": "Convenient",
+    "meta": "Close to Viman Nagar Metro",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Lamp"
+    ],
+    "vacancy": 4,
+    "deposit": 3000,
+    "contact": [
+      "+919900110022"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Serene Girls PG, Kothrud",
+    "area": "Kothrud",
+    "type": "Girls PG",
+    "price": 8700,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Quiet Area"
+    ],
+    "img": "./7.png",
+    "badge": "Value",
+    "meta": "Near Kothrud Bus Stand",
+    "amenities": [
+      "Locker",
+      "Washing Machine",
+      "RO Water",
+      "Induction"
+    ],
+    "vacancy": 2,
+    "deposit": 8700,
+    "contact": [
+      "+919900110023"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Pragati Boys Hostel, Shivaji Nagar",
+    "area": "Kothrud",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 4200,
+      "lower_bed": 4600
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "CCTV"
+    ],
+    "img": "./8.png",
+    "badge": "Economy",
+    "meta": "Near Shivaji Nagar Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 7,
+    "deposit": 1800,
+    "contact": [
+      "+919900110024"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Glow Girls PG, Nal Stop",
+    "area": "Kothrud",
+    "type": "Girls PG",
+    "price": 6200,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Affordable"
+    ],
+    "img": "./9.png",
+    "badge": "Budget",
+    "meta": "Near Narhe Market",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Induction",
+      "Locker"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110025"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "BrightStay Boys PG, Magarpatta",
+    "area": "Kothrud",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 8000
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Near IT Parks"
+    ],
+    "img": "./10.png",
+    "badge": "Premium",
+    "meta": "Near Magarpatta City",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "Induction"
+    ],
+    "vacancy": 2,
+    "deposit": 8000,
+    "contact": [
+      "+919900110026"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "ComfortZone Girls PG, Pimpri-Chinchwad",
+    "area": "Kothrud",
+    "type": "Girls PG",
+    "price": 6900,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./11.png",
+    "badge": "Value",
+    "meta": "Near Chinchwad Market",
+    "amenities": [
+      "Locker",
+      "Washing Machine",
+      "RO Water",
+      "Induction"
+    ],
+    "vacancy": 3,
+    "deposit": 3000,
+    "contact": [
+      "+919900110027"
+    ]
+  }
+]
