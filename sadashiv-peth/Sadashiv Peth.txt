@@ -1,0 +1,303 @@
+
+  {
+    "id": 1,
+    "title": "Ace Boys Hostel, Shivajinagar",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 5400,
+      "lower_bed": 5800
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "CCTV",
+      "WiFi"
+    ],
+    "img": "./1.png",
+    "badge": "Central",
+    "meta": "Near Railway Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 5,
+    "deposit": 2500,
+    "contact": [
+      "+919900110028"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Meadow Girls PG, Wakad",
+    "area": "Sadashiv Peth",
+    "type": "Girls PG",
+    "price": 7200,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Near Hinjewadi",
+      "WiFi"
+    ],
+    "img": "./2.png",
+    "badge": "Convenient",
+    "meta": "Close to Wakad Chowk",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Induction",
+      "Locker"
+    ],
+    "vacancy": 4,
+    "deposit": 2000,
+    "contact": [
+      "+919900110029"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Nexus Boys Hostel, Shivaji Nagar",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 6500
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Study Table"
+    ],
+    "img": "./3.png",
+    "badge": "Value",
+    "meta": "Near Shivaji Nagar Circle",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "CCTV"
+    ],
+    "vacancy": 3,
+    "deposit": 3000,
+    "contact": [
+      "+919900110030"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Urban Pearl Girls PG, Hadapsar",
+    "area": "Sadashiv Peth",
+    "type": "Girls PG",
+    "price": 7900,
+    "furnish": "Furnished",
+    "chips": [
+      "24x7 Water",
+      "WiFi"
+    ],
+    "img": "./4.png",
+    "badge": "Value",
+    "meta": "Near Hadapsar Market",
+    "amenities": [
+      "Bed & Mattress",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 5,
+    "deposit": 2500,
+    "contact": [
+      "+919900110031"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Gateway Boys Hostel, Kharadi",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 9200
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "Near IT Parks",
+      "WiFi",
+      "CCTV"
+    ],
+    "img": "./5.png",
+    "badge": "Premium",
+    "meta": "Near Kharadi IT Park",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 2,
+    "deposit": 5000,
+    "contact": [
+      "+919900110032"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Rosewood Girls PG, Lohgaon",
+    "area": "Sadashiv Peth",
+    "type": "Girls PG",
+    "price": 6400,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Affordable",
+      "WiFi"
+    ],
+    "img": "./6.png",
+    "badge": "Budget",
+    "meta": "Near Lohegaon Road",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Induction",
+      "Locker"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110033"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Atlas Boys Hostel, Bibwewadi",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 3600,
+      "lower_bed": 4000
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./7.png",
+    "badge": "Economy",
+    "meta": "Near Bibwewadi Market",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 7,
+    "deposit": 1500,
+    "contact": [
+      "+919900110034"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Tranquil Girls PG, Karve Nagar",
+    "area": "Sadashiv Peth",
+    "type": "Girls PG",
+    "price": 8800,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "24x7 Water"
+    ],
+    "img": "./8.png",
+    "badge": "Value",
+    "meta": "Near Karve Road",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Lamp"
+    ],
+    "vacancy": 3,
+    "deposit": 4000,
+    "contact": [
+      "+919900110035"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Crown Boys Hostel, Model Colony",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 7200
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "Quiet Area",
+      "WiFi"
+    ],
+    "img": "./9.png",
+    "badge": "Premium",
+    "meta": "Near Model Colony Market",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Table"
+    ],
+    "vacancy": 2,
+    "deposit": 3500,
+    "contact": [
+      "+919900110036"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Mezzo Girls PG, Vartak Nagar",
+    "area": "Sadashiv Peth",
+    "type": "Girls PG",
+    "price": 5600,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Budget",
+      "WiFi"
+    ],
+    "img": "./10.png",
+    "badge": "Budget",
+    "meta": "Near Local Schools",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Induction",
+      "Locker"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110037"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Summit Boys Hostel, Baner",
+    "area": "Sadashiv Peth",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 6800,
+      "lower_bed": 7200
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "Near IT Parks",
+      "WiFi"
+    ],
+    "img": "./11.png",
+    "badge": "Premium",
+    "meta": "Near Baner-Pashan Link Road",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 3,
+    "deposit": 4000,
+    "contact": [
+      "+919900110038"
+    ]
+  }
