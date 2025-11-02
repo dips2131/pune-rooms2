@@ -1,0 +1,167 @@
+
+  {
+    "id": 1,
+    "title": "Atlas Boys Hostel, Hadapsar",
+    "area": "Shivajinagar",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 4100,
+      "lower_bed": 4500
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./1.png",
+    "badge": "Economy",
+    "meta": "Near Hadapsar Market",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Daily Cleaning"
+    ],
+    "vacancy": 8,
+    "deposit": 1500,
+    "contact": [
+      "+919900110050"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Evergreen Girls PG, Nashik Phata",
+    "area": "Shivajinagar",
+    "type": "Girls PG",
+    "price": 6300,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Affordable",
+      "WiFi"
+    ],
+    "img": "./2.png",
+    "badge": "Budget",
+    "meta": "Near Nashik Phata Bus Stop",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Locker",
+      "Induction"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110051"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Pinnacle Boys PG, Kalyani Nagar",
+    "area": "Shivajinagar",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 9800
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Electricity Included"
+    ],
+    "img": "./3.png",
+    "badge": "Premium",
+    "meta": "Near Kalyani Nagar",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 2,
+    "deposit": 9800,
+    "contact": [
+      "+919900110052"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Willow Girls PG, Bhosari",
+    "area": "Shivajinagar",
+    "type": "Girls PG",
+    "price": 5900,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./4.png",
+    "badge": "Value",
+    "meta": "Near Bhosari MIDC",
+    "amenities": [
+      "Washing Machine",
+      "RO Water",
+      "Locker"
+    ],
+    "vacancy": 5,
+    "deposit": 2000,
+    "contact": [
+      "+919900110053"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cedar Boys Hostel, Deccan",
+    "area": "Shivajinagar",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 6200,
+      "lower_bed": 6600
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Central Location"
+    ],
+    "img": "./5.png",
+    "badge": "Central",
+    "meta": "Near Deccan Gymkhana",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Table"
+    ],
+    "vacancy": 3,
+    "deposit": 3000,
+    "contact": [
+      "+919900110054"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Aurora Girls PG, Baner",
+    "area": "Shivajinagar",
+    "type": "Girls PG",
+    "price": 12800,
+    "furnish": "Furnished",
+    "chips": [
+      "Premium",
+      "WiFi",
+      "24x7 Water"
+    ],
+    "img": "./6.png",
+    "badge": "Luxury",
+    "meta": "Near Baner-Balewadi Link Road",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "CCTV",
+      "Electricity Included"
+    ],
+    "vacancy": 1,
+    "deposit": 12800,
+    "contact": [
+      "+919900110055"
+    ]
+  }
