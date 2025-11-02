@@ -1,0 +1,300 @@
+
+  {
+    "id": 1,
+    "title": "Harbour Girls PG, Chinchwad",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 7000,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./1.png",
+    "badge": "Value",
+    "meta": "Near Chinchwad Station",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 4,
+    "deposit": 3000,
+    "contact": [
+      "+919900110039"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Pioneer Boys Hostel, Dehu Road",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 4100
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Affordable",
+      "WiFi"
+    ],
+    "img": "./2.png",
+    "badge": "Economy",
+    "meta": "Near Dehu Road Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers"
+    ],
+    "vacancy": 9,
+    "deposit": 1500,
+    "contact": [
+      "+919900110040"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Luxe Girls PG, Ferguson College Road",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 12500,
+    "furnish": "Furnished",
+    "chips": [
+      "Electricity Included",
+      "WiFi",
+      "Central Location"
+    ],
+    "img": "./3.png",
+    "badge": "Luxury",
+    "meta": "Near FC Road",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "CCTV"
+    ],
+    "vacancy": 1,
+    "deposit": 12500,
+    "contact": [
+      "+919900110041"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Oasis Boys Hostel, Yerawada",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 3900,
+      "lower_bed": 4300
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Daily Cleaning"
+    ],
+    "img": "./4.png",
+    "badge": "Budget",
+    "meta": "Near Yerawada Court",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Washing Machine"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110042"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Felicity Girls PG, Deccan",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 9300,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "24x7 Water"
+    ],
+    "img": "./5.png",
+    "badge": "Central",
+    "meta": "Near Deccan Gymkhana",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 2,
+    "deposit": 9300,
+    "contact": [
+      "+919900110043"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Nova Boys Hostel, Kothrud",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 5600
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Quiet Area"
+    ],
+    "img": "./6.png",
+    "badge": "Value",
+    "meta": "Near Kothrud Intersection",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Table"
+    ],
+    "vacancy": 4,
+    "deposit": 2500,
+    "contact": [
+      "+919900110044"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Blossom Girls PG, Tilak Road",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 8100,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Near Colleges"
+    ],
+    "img": "./7.png",
+    "badge": "Value",
+    "meta": "Near Tilak Road",
+    "amenities": [
+      "Bed & Mattress",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 3,
+    "deposit": 4000,
+    "contact": [
+      "+919900110045"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Orbit Boys Hostel, Wakad",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 4600,
+      "lower_bed": 5000
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Near Hinjewadi",
+      "WiFi"
+    ],
+    "img": "./8.png",
+    "badge": "Economy",
+    "meta": "Near Wakad Chowk",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110046"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Serenity Girls PG, Kharadi",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 11500,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Near IT Parks"
+    ],
+    "img": "./9.png",
+    "badge": "Premium",
+    "meta": "Close to Kharadi IT Hub",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "CCTV"
+    ],
+    "vacancy": 2,
+    "deposit": 11500,
+    "contact": [
+      "+919900110047"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Horizon Boys Hostel, Magarpatta",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 8500
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "Near IT Parks",
+      "WiFi"
+    ],
+    "img": "./10.png",
+    "badge": "Premium",
+    "meta": "Near Magarpatta City",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 2,
+    "deposit": 8500,
+    "contact": [
+      "+919900110048"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "MeadowBrook Girls PG, Kothrud",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 7700,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Daily Cleaning"
+    ],
+    "img": "./11.png",
+    "badge": "Value",
+    "meta": "Near Kothrud Park",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 4,
+    "deposit": 3000,
+    "contact": [
+      "+919900110049"
+    ]
+  }

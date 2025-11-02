@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Warje</title>
+<link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root{
+    --bg0:#0f1012;
+    --bg1:#1d1f22;
+    --bg2:#2a2d31;
+    --card:#202327;
+    --muted:#9ca0a6;
+    --primary:#6c6f74;
+    --accent:#b5b8bc;
+    --text:#ececec;
+    --ring: rgba(170,170,170,.35);
+    --shadow:0 10px 30px rgba(0,0,0,.4);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:Inter,system-ui,sans-serif;color:var(--text);}
+
+  /* Animated HD background via canvas */
+  body{
+    background:var(--bg1);
+    overflow-x:hidden;
+  }
+  #bgCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    background:
+      radial-gradient(circle at 30% 40%, var(--bg2), var(--bg0) 70%),
+      linear-gradient(140deg, var(--bg0), var(--bg1) 55%, var(--bg2));
+  }
+
+  /* Optional subtle animated noise overlay */
+  .grain{
+    pointer-events:none;
+    position:fixed;inset:0;z-index:-1;
+    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.08'/></svg>");
+    animation: grain 14s linear infinite;
+  }
+  @keyframes grain{
+    0%{transform:translate(0,0)}
+    50%{transform:translate(-3%,2%)}
+    100%{transform:translate(0,0)}
+  }
+
+  header{position:sticky;top:0;background:rgba(24,26,30,.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .logo img{width:44px;height:44px;object-fit:contain;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .brand{font-weight:700;letter-spacing:.4px;font-size:20px}
+  .tag{font-size:12px;color:var(--muted)}
+  .socials{display:flex;gap:14px}
+  .socials img{width:22px;height:22px;filter:invert(1) brightness(.8);transition:.25s}
+  .socials img:hover{filter:invert(1) brightness(1.3);transform:scale(1.15)}
+
+  .divider{border-bottom:1px solid rgba(255,255,255,.08);margin:0 20px}
+
+  .telegram-section{margin:30px auto;max-width:900px;padding:20px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .telegram-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .telegram-header img{width:28px;height:28px;filter:invert(1)}
+  .telegram-title{font-weight:600;font-size:16px}
+  .spacer{flex:1}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px}
+  .input,.select{background:#181a1d;color:var(--text);border:1px solid rgba(255,255,255,.08);padding:12px 14px;border-radius:12px;outline:none;min-width:140px}
+  .input:focus,.select:focus{border-color:var(--accent);box-shadow:0 0 0 6px var(--ring)}
+  .btn{background:linear-gradient(180deg,#5d6064,#3c3e42);padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.15);color:#f1f1f1;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,.18)}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 18px}
+  .chip{border:1px solid rgba(255,255,255,.12);background:#181a1d;padding:8px 12px;border-radius:999px;font-size:13px;color:var(--muted);cursor:pointer}
+  .chip.active{border-color:var(--accent);color:#e4e6e8}
+
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  @media (max-width:960px){.grid{grid-template-columns:repeat(12,1fr)}}
+  @media (max-width:720px){.grid{grid-template-columns:repeat(6,1fr)}}
+
+  .card{grid-column:span 4;background:linear-gradient(180deg,#23262b,#181a1d);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  @media (max-width:960px){.card{grid-column:span 6}}
+  @media (max-width:600px){.card{grid-column:span 6}}
+  .thumb{position:relative;height:180px;background:#101214;overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(110%) contrast(110%) brightness(.9)}
+  .badge{position:absolute;top:10px;left:10px;background:rgba(40,42,46,.65);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.1);color:#d2d4d6;padding:6px 10px;border-radius:999px;font-size:12px}
+  .price{position:absolute;bottom:10px;right:10px;background:rgba(40,42,46,.75);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.1);color:#e2e2e2;padding:8px 12px;border-radius:10px;font-weight:600}
+  .body{padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px}
+  .title{font-weight:600}
+  .meta{font-size:13px;color:var(--muted)}
+  .amenities{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{padding:6px 10px;border-radius:999px;background:#151719;border:1px solid rgba(255,255,255,.08);color:#cbced1;font-size:12px}
+  .cta{display:flex;gap:8px;margin-top:8px}
+  .cta .btn{flex:1}
+
+  footer{color:var(--muted);font-size:13px;padding:24px 0 40px;text-align:center}
+
+  .chat-widget{position:fixed;bottom:20px;right:20px;z-index:1000}
+  .chat-bubble{width:56px;height:56px;border-radius:50%;background:#2f3236;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.1)}
+  .chat-bubble img{width:28px;height:28px;filter:invert(1)}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="grain"></div>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="logo">
+      <img src="logo.png" alt="Logo" />
+      <div>
+        <div class="brand">PuneRooms</div>
+        <div class="tag"></div>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+</header>
+<style>
+/* Matte dark top bar override */
+header{
+  background:#141516 !important;
+  backdrop-filter:none !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+.header-inner{gap:32px !important}
+.top-search-wrap{
+  flex:1;
+  display:flex;
+  justify-content:flex-end;
+}
+#globalSearch{
+  width:280px;
+  max-width:100%;
+  background:#1b1d20;
+  border:1px solid rgba(255,255,255,.12);
+  color:#ececec;
+  padding:12px 16px;
+  border-radius:14px;
+  font:14px/1.3 Inter,system-ui,sans-serif;
+  outline:none;
+  transition:.25s;
+}
+#globalSearch:focus{
+  border-color:#b5b8bc;
+  box-shadow:0 0 0 6px rgba(170,170,170,.35);
+}
+@media (max-width:720px){
+  #globalSearch{width:100%}
+  .top-search-wrap{flex:1}
+}
+</style>
+<script>
+(function(){
+  const headerInner=document.querySelector('.header-inner');
+  if(!headerInner) return;
+  const box=document.createElement('div');
+  box.className='top-search-wrap';
+  box.innerHTML='<input id="globalSearch" type="search" placeholder="Search listings..." aria-label="Search listings"/>';
+  headerInner.appendChild(box);
+
+  function doSearch(q){
+    if(typeof listings==='undefined' || typeof render!=='function') return;
+    if(!window._allListings) window._allListings=[...listings];
+    const all=window._allListings;
+    listings.length=0;
+    if(!q){
+      all.forEach(l=>listings.push(l));
+      render();
+      const rc=document.getElementById('resultsCount');
+      if(rc) rc.textContent='Showing '+listings.length+' listings';
+      return;
+    }
+    const filtered=all.filter(l=>{
+      const hay=[l.title,l.area,l.type,l.furnish,l.meta||''].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+    filtered.forEach(l=>listings.push(l));
+    render();
+    const rc=document.getElementById('resultsCount');
+    if(rc){
+      rc.textContent=filtered.length
+        ? 'Found '+filtered.length+' result(s) for "'+q+'"'
+        : 'No results for "'+q+'"';
+    }
+  }
+
+  document.addEventListener('input',e=>{
+    if(e.target && e.target.id==='globalSearch'){
+      doSearch(e.target.value.trim().toLowerCase());
+    }
+  });
+})();
+</script>
+<section class="telegram-section">
+  <div class="telegram-header">
+    <div class="telegram-title">Live Updates From Telegram</div>
+    <div class="spacer"></div>
+    <a href="#" class="btn ghost" style="padding:8px 12px;font-size:12px">Join Channel</a>
+  </div>
+  <div id="telegramFeed"></div>
+</section>
+
+<main class="wrap">
+  <div id="resultsCount" class="tag" style="margin:10px 0 14px 2px">Showing all listings</div>
+  <section id="grid" class="grid"></section>
+</main>
+
+<footer class="wrap">Made by DIPAK INDRALE</footer>
+
+<div class="chat-widget">
+  <div class="chat-bubble" onclick="startTelegramChat()">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="">
+  </div>
+</div>
+
+<script>
+function startTelegramChat(){window.open('https://t.me/pune_Rooms_rental','_blank');}
+
+
+
+
+const listings = [
+
+  {
+    "id": 1,
+    "title": "Harbour Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 7000,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Parking"
+    ],
+    "img": "./1.png",
+    "badge": "Value",
+    "meta": "Near warje Station",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 4,
+    "deposit": 3000,
+    "contact": [
+      "+919900110039"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Pioneer Boys Hostel, warje",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": 11500,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Affordable",
+      "WiFi"
+    ],
+    "img": "./2.png",
+    "badge": "Economy",
+    "meta": "Near warje Station",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers"
+    ],
+    "vacancy": 9,
+    "deposit": 1500,
+    "contact": [
+      "+919900110040"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Luxe Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 12500,
+    "furnish": "Furnished",
+    "chips": [
+      "Electricity Included",
+      "WiFi",
+      "Central Location"
+    ],
+    "img": "./3.png",
+    "badge": "Luxury",
+    "meta": "Near warje Station",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "CCTV"
+    ],
+    "vacancy": 1,
+    "deposit": 12500,
+    "contact": [
+      "+919900110041"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Oasis Boys Hostel, warje",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "upper_bed": 3900,
+      "lower_bed": 4300
+    },
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "WiFi",
+      "Daily Cleaning"
+    ],
+    "img": "./4.png",
+    "badge": "Budget",
+    "meta": "Near warje",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Washing Machine"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110042"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Felicity Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 9300,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "24x7 Water"
+    ],
+    "img": "./5.png",
+    "badge": "Central",
+    "meta": "Near warje Market",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 2,
+    "deposit": 9300,
+    "contact": [
+      "+919900110043"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Nova Boys Hostel, warje",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": {
+      "single_bed": 5600
+    },
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Quiet Area"
+    ],
+    "img": "./6.png",
+    "badge": "Value",
+    "meta": "Near warje Intersection",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers",
+      "Study Table"
+    ],
+    "vacancy": 4,
+    "deposit": 2500,
+    "contact": [
+      "+919900110044"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Blossom Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 8100,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Near Colleges"
+    ],
+    "img": "./7.png",
+    "badge": "Value",
+    "meta": "Near warje",
+    "amenities": [
+      "Bed & Mattress",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 3,
+    "deposit": 4000,
+    "contact": [
+      "+919900110045"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Orbit Boys Hostel, warje",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": 6500,
+    "furnish": "Semi-Furnished",
+    "chips": [
+      "Near Hinjewadi",
+      "WiFi"
+    ],
+    "img": "./8.png",
+    "badge": "Economy",
+    "meta": "Near warje Chowk",
+    "amenities": [
+      "RO Water",
+      "Geyser",
+      "Lockers"
+    ],
+    "vacancy": 6,
+    "deposit": 2000,
+    "contact": [
+      "+919900110046"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Serenity Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 11500,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Near IT Parks"
+    ],
+    "img": "./9.png",
+    "badge": "Premium",
+    "meta": "Close to warje IT Hub",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table",
+      "CCTV"
+    ],
+    "vacancy": 2,
+    "deposit": 11500,
+    "contact": [
+      "+919900110047"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Horizon Boys Hostel, warje",
+    "area": "Warje",
+    "type": "Boys PG",
+    "price": 8500,
+    "furnish": "Furnished",
+    "chips": [
+      "Near IT Parks",
+      "WiFi"
+    ],
+    "img": "./10.png",
+    "badge": "Premium",
+    "meta": "Near warje City",
+    "amenities": [
+      "Fridge",
+      "Washing Machine",
+      "RO Water",
+      "Study Table"
+    ],
+    "vacancy": 2,
+    "deposit": 8500,
+    "contact": [
+      "+919900110048"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "MeadowBrook Girls PG, warje",
+    "area": "Warje",
+    "type": "Girls PG",
+    "price": 7700,
+    "furnish": "Furnished",
+    "chips": [
+      "WiFi",
+      "Daily Cleaning"
+    ],
+    "img": "./11.png",
+    "badge": "Value",
+    "meta": "Near warje Park",
+    "amenities": [
+      "Bed",
+      "Locker",
+      "Washing Machine",
+      "RO Water"
+    ],
+    "vacancy": 4,
+    "deposit": 3000,
+    "contact": [
+      "+919900110049"
+    ]
+  }
+
+]
+
+
+const grid=document.getElementById('grid');
+const resultsCount=document.getElementById('resultsCount');
+function formatCurrency(n){return "₹"+n.toLocaleString("en-IN");}
+function listingCard(item){
+  return `<article class="card">
+    <div class="thumb">
+      <img src="${item.img}" alt="${item.title}" loading="lazy" />
+      ${item.badge?`<div class="badge">${item.badge}</div>`:""}
+      <div class="price">${formatCurrency(item.price)}/mo</div>
+    </div>
+    <div class="body">
+      <div class="title">${item.title}</div>
+      <div class="meta">${item.area} • ${item.type} • ${item.furnish}</div>
+      <div class="meta">${item.meta||""}</div>
+      <div class="amenities">${(item.amenities||[]).map(a=>`<span class="pill">${a}</span>`).join('')}</div>
+      <div class="cta">
+        <button class="btn ghost" onclick="alert('Saved!')">Save</button>
+        <button class="btn" onclick="alert('Contact owner for ${item.title}')">Contact</button>
+      </div>
+    </div>
+  </article>`;
+}
+function render(){
+  grid.innerHTML=listings.map(listingCard).join('');
+  resultsCount.textContent=`Showing ${listings.length} listings For Karvenagar`;
+}
+render();
+
+/* HD animated background particles */
+const canvas=document.getElementById('bgCanvas');
+const ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener('resize',resize);
+resize();
+function initParticles(count=70){
+  particles=[];
+  for(let i=0;i<count;i++){
+    particles.push({
+      x:Math.random()*w,
+      y:Math.random()*h,
+      r:20+Math.random()*90,
+      vx:(Math.random()-.5)*0.25,
+      vy:(Math.random()-.5)*0.25,
+      alpha:.08+Math.random()*.15,
+      gray:150+Math.random()*60
+    });
+  }
+}
+initParticles();
+function step(){
+  ctx.clearRect(0,0,w,h);
+  for(const p of particles){
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<-p.r) p.x=w+p.r;
+    if(p.x>w+p.r) p.x=-p.r;
+    if(p.y<-p.r) p.y=h+p.r;
+    if(p.y>h+p.r) p.y=-p.r;
+    const g=p.gray;
+    const grd=ctx.createRadialGradient(p.x,p.y,p.r*.1,p.x,p.y,p.r);
+    grd.addColorStop(0,`rgba(${g},${g},${g},${p.alpha*1.4})`);
+    grd.addColorStop(1,`rgba(${g-40},${g-40},${g-40},0)`);
+    ctx.fillStyle=grd;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  }
+  requestAnimationFrame(step);
+}
+step();
+</script>
+</body>
+</html>
+<!-- Legal docs floating panel -->
+<script>
+(function(){
+  const docs=[
+    {title:'Terms & Conditions',file:'Terms and Conditions.txt'},
+    {title:'Disclaimer',file:'Disclaimer.txt'},
+    {title:'Privacy Policy',file:'Privacy Policy.txt'}
+  ];
+  const panel=document.createElement('div');
+  panel.style.cssText='position:fixed;left:20px;bottom:20px;display:flex;flex-direction:column;gap:6px;z-index:1200;font:12px/1.4 Inter,system-ui,sans-serif';
+  const box=document.createElement('div');
+  box.style.cssText='display:none;position:fixed;inset:0;padding:60px 30px 40px;background:rgba(15,16,18,.85);backdrop-filter:blur(10px);z-index:1300;overflow:auto';
+  const content=document.createElement('div');
+  content.style.cssText='max-width:900px;margin:0 auto;background:#202327;border:1px solid rgba(255,255,255,.12);padding:30px 28px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.55);white-space:pre-wrap;color:#ececec;font-size:14px';
+  const close=document.createElement('button');
+  close.textContent='Close';
+  close.style.cssText='position:fixed;top:18px;right:22px;background:#2f3236;color:#f1f1f1;border:1px solid rgba(255,255,255,.15);padding:10px 18px;border-radius:12px;font-weight:600;cursor:pointer;font-size:13px';
+  close.onclick=()=>{box.style.display='none';content.textContent='';};
+  box.appendChild(close);
+  box.appendChild(content);
+  document.body.appendChild(box);
+  function openDoc(file,title){
+    content.textContent='Loading '+title+'...';
+    box.style.display='block';
+    fetch(file.replace(/ /g,'%20'))
+      .then(r=>r.ok?r.text():Promise.reject(r.status))
+      .then(t=>{content.textContent=title+'\n\n'+t;})
+      .catch(e=>{content.textContent='Failed to load '+title+' ('+e+')';});
+  }
+  docs.forEach(d=>{
+    const link=document.createElement('button');
+    link.textContent=d.title;
+    link.style.cssText='background:#2f3236;color:#d9d9d9;border:1px solid rgba(255,255,255,.15);padding:8px 14px;border-radius:10px;font-weight:500;cursor:pointer;font-size:12px;letter-spacing:.2px';
+    link.onmouseenter=()=>link.style.filter='brightness(1.2)';
+    link.onmouseleave=()=>link.style.filter='';
+    link.onclick=()=>openDoc(d.file,d.title);
+    panel.appendChild(link);
+  });
+  document.body.appendChild(panel);
+})();
+</script>
+<script>
+(function(){
+  const box=document.createElement('div');
+  box.className='legal-square-box';
+  box.innerHTML='<a data-file="Terms and Conditions.txt">Terms & Conditions</a><a data-file="Disclaimer.txt">Disclaimer</a><a data-file="Privacy Policy.txt">Privacy Policy</a><a href="mailto:contact@puneRooms.example">Contact Us</a>';
+  document.body.appendChild(box);
+  const style=document.createElement('style');
+  style.textContent='.legal-square-box{position:fixed;inset:auto 0 0 50%;transform:translateX(-50%);width:240px;height:auto;background:#1d6dff;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:10px;padding:18px 20px;font:12px/1.3 Inter,system-ui,sans-serif;color:#fff;z-index:1400;border-radius:18px 18px 0 0;box-shadow:0 8px 26px rgba(0,0,0,.45);border:2px solid #69a9ff} .legal-square-box a{color:#fff;text-decoration:none;font-weight:600;display:block;background:rgba(255,255,255,.12);padding:8px 10px;border-radius:8px;letter-spacing:.3px;transition:.25s} .legal-square-box a:hover{background:rgba(255,255,255,.25)}';
+  document.head.appendChild(style);
+  box.addEventListener('click',e=>{
+    const f=e.target.getAttribute('data-file');
+    if(!f) return;
+    e.preventDefault();
+    window.open(f.replace(/ /g,'%20'),'_blank');
+  });
+})();
+</script>
+<script>
+(function(){
+  const docs=[
+    {title:'Terms & Conditions',file:'Terms and Conditions.txt'},
+    {title:'Disclaimer',file:'Disclaimer.txt'},
+    {title:'Privacy Policy',file:'Privacy Policy.txt'},
+    {title:'Contact Us',href:'mailto:contact@puneRooms.example'}
+  ];
+  const box=document.createElement('div');
+  box.style.cssText='position:fixed;inset:auto 0 0 50%;transform:translateX(-50%);width:240px;background:#1d6dff;display:flex;flex-direction:column;gap:10px;padding:18px 20px;font:12px/1.3 Inter,system-ui,sans-serif;color:#fff;z-index:1400;border-radius:18px 18px 0 0;box-shadow:0 8px 26px rgba(0,0,0,.45);border:2px solid #69a9ff';
+  const modal=document.createElement('div');
+  modal.style.cssText='display:none;position:fixed;inset:0;padding:60px 30px 40px;background:rgba(15,16,18,.85);backdrop-filter:blur(10px);z-index:1300;overflow:auto';
+  const content=document.createElement('div');
+  content.style.cssText='max-width:900px;margin:0 auto;background:#202327;border:1px solid rgba(255,255,255,.12);padding:30px 28px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.55);white-space:pre-wrap;color:#ececec;font-size:14px';
+  const close=document.createElement('button');
+  close.textContent='Close';
+  close.style.cssText='position:fixed;top:18px;right:22px;background:#2f3236;color:#f1f1f1;border:1px solid rgba(255,255,255,.15);padding:10px 18px;border-radius:12px;font-weight:600;cursor:pointer;font-size:13px';
+  close.onclick=()=>{modal.style.display='none';};
+  modal.appendChild(close);
+  modal.appendChild(content);
+  document.body.appendChild(modal);
+  docs.forEach(d=>{
+    const link=document.createElement('a');
+    link.textContent=d.title;
+    link.style.cssText='color:#fff;text-decoration:none;font-weight:600;background:rgba(255,255,255,.12);padding:8px 10px;border-radius:8px;letter-spacing:.3px;transition:.25s;cursor:pointer';
+    link.onmouseenter=()=>link.style.background='rgba(255,255,255,.25)';
+    link.onmouseleave=()=>link.style.background='rgba(255,255,255,.12)';
+    if(d.href){
+      link.href=d.href;
+    }else{
+      link.onclick=e=>{
+        e.preventDefault();
+        content.textContent='Loading '+d.title+'...';
+        modal.style.display='block';
+        fetch(d.file.replace(/ /g,'%20'))
+          .then(r=>r.ok?r.text():Promise.reject(r.status))
+          .then(t=>{content.textContent=d.title+'\n\n'+t;})
+          .catch(e=>{content.textContent='Failed to load '+d.title;});
+      };
+    }
+    box.appendChild(link);
+  });
+  document.body.appendChild(box);
+})();
+<script>
+// Remove duplicated legal panels, keep only the latest (modal) version
+(function(){
+  const panels=[...document.querySelectorAll('body > div')]
+    .filter(d=>/Terms & Conditions/.test(d.textContent));
+  if(panels.length>1){
+    panels.slice(0,-1).forEach(p=>p.remove());
+  }
+})();
+</script>
+
+<script>
+(function(){
+  const keywords=['Terms & Conditions','Disclaimer','Privacy Policy'];
+  const panels=new Set();
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_ELEMENT);
+  while(walker.nextNode()){
+    const el=walker.currentNode;
+    const txt=el.textContent||'';
+    if(keywords.some(k=>txt.includes(k))){
+      let root=el;
+      while(root.parentElement && root.parentElement!==document.body &&
+            root.parentElement.childElementCount<=12 &&
+            !['MAIN','HEADER','FOOTER'].includes(root.parentElement.tagName)){
+        root=root.parentElement;
+      }
+      panels.add(root);
+    }
+  }
+  panels.forEach(p=>p.remove());
+  // Remove related scripts
+  document.querySelectorAll('script').forEach(s=>{
+    if(/Terms and Conditions|Disclaimer|Privacy Policy/.test(s.textContent)) s.remove();
+  });
+})();
+</script>
+
+<style>
+  .legal-ribbon{
+    position:relative;
+    width:100%;
+    margin:50px 0 0;
+    background:#67c9ff;
+    color:#043044;
+    padding:28px 20px 40px;
+    font:14px/1.45 Inter,system-ui,sans-serif;
+    box-shadow:0 6px 22px rgba(0,0,0,.35) inset,0 8px 28px rgba(0,0,0,.35);
+  }
+  .legal-ribbon:after{
+    content:'';
+    position:absolute;
+    left:0;right:0;bottom:-22px;
+    height:22px;
+    background:
+      linear-gradient(-45deg,transparent 14px,#67c9ff 0,#67c9ff 50%,transparent 0),
+      linear-gradient(45deg,transparent 14px,#67c9ff 0,#67c9ff 50%,transparent 0);
+    background-size:44px 44px;
+    background-repeat:repeat-x;
+  }
+  .legal-links{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:28px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .legal-links a{
+    background:rgba(255,255,255,.65);
+    color:#043044;
+    text-decoration:none;
+    font-weight:600;
+    padding:12px 24px;
+    border-radius:14px;
+    letter-spacing:.4px;
+    backdrop-filter:blur(4px);
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    transition:.25s;
+  }
+  .legal-links a:hover{
+    background:#fff;
+    color:#022433;
+    transform:translateY(-4px);
+  }
+  @media (max-width:640px){
+    .legal-links{gap:14px}
+    .legal-links a{flex:1 1 100%;text-align:center}
+  }
+</style>
+<div class="legal-ribbon">
+  <nav class="legal-links">
+    <a target="_blank" href="Privacy%20Policy.txt" rel="noopener">Privacy Policy</a>
+    <a target="_blank" href="Disclaimer.txt" rel="noopener">Disclaimer</a>
+    <a target="_blank" href="Terms%20and%20Conditions.txt" rel="noopener">Terms & Conditions</a>
+  </nav>
+</div>
+<style>
+/* Override legal ribbon styles */
+.legal-ribbon{
+  background:#b3e5ff;
+  color:#033042;
+  padding:70px 30px 90px;
+  font-size:16px;
+}
+.legal-ribbon:after{display:none}
+.legal-links a{
+  background:rgba(255,255,255,.75);
+  color:#033042;
+  font-size:15px;
+  padding:18px 34px;
+}
+.legal-links a:hover{
+  background:#fff;
+  color:#022433;
+  transform:translateY(-6px);
+}
+</style>
+<style>
+.logo{display:flex;align-items:center;gap:18px}
+.logo img{width:64px;height:64px}
+.header-inner .brand{
+  font-size:54px;
+  line-height:1;
+  letter-spacing:1.2px;
+  font-weight:800;
+  background:linear-gradient(90deg,#d1d5db,#ffffff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+@media (max-width:700px){
+  .header-inner .brand{font-size:36px}
+  .logo img{width:54px;height:54px}
+}
+</style>
+<script>
+const b=document.querySelector('.brand');
+if(b) b.textContent='PuneRooms';
+// Ensure "PuneRooms" appears to the right side of the logo image
+const logoBox=document.querySelector('.logo');
+if(logoBox){
+  const brand=logoBox.querySelector('.brand');
+  if(brand){
+    const wrapper=brand.parentElement;
+    if(wrapper && wrapper!==logoBox){
+      // Move brand directly under .logo beside the img
+      logoBox.appendChild(brand);
+      wrapper.remove();
+    }
+    logoBox.style.display='flex';
+    logoBox.style.alignItems='center';
+    brand.style.marginLeft='18px';
+  }
+}
+</script>
+<style>
+.legal-square-box{
+  background:#e9f6ff !important;
+  color:#033042 !important;
+  border-color:#c5e9ff !important;
+}
+.legal-square-box a{
+  background:rgba(0,0,0,.08) !important;
+  color:#033042 !important;
+}
+.legal-square-box a:hover{
+  background:rgba(0,0,0,.15) !important;
+}
+.legal-ribbon{
+  background:#f2fbff !important;
+}
+.legal-links a{
+  background:#ffffff !important;
+  color:#033042 !important;
+}
+</style>
+<style>
+.legal-square-box{
+  background:#111 !important;
+  color:#eee !important;
+  border-color:#222 !important;
+  box-shadow:0 8px 26px rgba(0,0,0,.55) !important;
+}
+.legal-square-box a{
+  background:#1a1a1a !important;
+  color:#d5d5d5 !important;
+}
+.legal-square-box a:hover{
+  background:#222 !important;
+  color:#fff !important;
+}
+</style>
+<style>
+/* Dark matte theme for disclaimer / legal boxes */
+.legal-square-box{
+  background:#0f1011 !important;
+  color:#e0e2e4 !important;
+  border-color:#1d1f21 !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.55) !important;
+}
+.legal-square-box a{
+  background:#181a1c !important;
+  color:#d2d4d6 !important;
+}
+.legal-square-box a:hover{
+  background:#212427 !important;
+  color:#ffffff !important;
+}
+
+.legal-ribbon{
+  background:#121314 !important;
+  color:#d0d2d4 !important;
+  box-shadow:0 6px 22px rgba(0,0,0,.55) inset,0 8px 28px rgba(0,0,0,.55) !important;
+}
+.legal-links a{
+  background:#1b1d1f !important;
+  color:#e4e6e8 !important;
+  box-shadow:0 4px 16px rgba(0,0,0,.5) !important;
+}
+.legal-links a:hover{
+  background:#25282b !important;
+  color:#fff !important;
+  transform:translateY(-4px);
+}
+</style>
+<script>
+(function(){
+  const nav = document.querySelector('.legal-links');
+  if(nav && !nav.querySelector('a[data-contact]')){
+    const a = document.createElement('a');
+    a.href = 'mailto:contact@puneRooms.example';
+    a.textContent = 'Contact Us';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.setAttribute('data-contact','');
+    nav.appendChild(a);
+  }
+})();
+</script>
+<script>
+/* Dynamic updated legal pages (2025 revision) */
+(function(){
+  const stamp='Last Updated: '+new Date().toLocaleDateString('en-IN');
+  const head=(t)=>`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${t} – Pune Rooms</title><meta name="viewport" content="width=device-width,initial-scale=1">
+  const head=(t)=>`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${t} – Pune Rooms</title><meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root{--bg:#0e1012;--panel:#1c1f23;--text:#ececec;--accent:#4ac3ff}
+    body{margin:0;font:15px/1.6 system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);padding:46px 26px 90px;max-width:960px;margin:auto}
+    h1{margin:0 0 26px;font-size:38px;font-weight:700;letter-spacing:.5px}
+    h2{margin:34px 0 12px;font-size:22px;font-weight:600}
+    ul,ol{padding-left:20px}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .back{position:fixed;top:14px;left:14px;background:var(--panel);border:1px solid #2b2f33;color:var(--text);padding:8px 14px;border-radius:10px;font-size:13px;text-decoration:none}
+    .back:hover{background:#23272b}
+    footer{margin-top:60px;font-size:12px;color:#a3a9af}
+    p{max-width:840px}
+    .stamp{margin-top:34px;font-style:italic;color:#b5bcc2}
+  </style></head><body><a class="back" href="#" onclick="history.back();return false;">.</a>`;
+  const tail=`<footer>${stamp}</footer></body></html>`;
+
+  const docs={
+    'Privacy Policy.html': head('Privacy Policy') + `
+      <h1>Privacy Policy – Pune Rooms</h1>
+      <p>Welcome to Pune Rooms (accessible from https://pune-Rooms.com). Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website and associated platforms.</p>
+      <h2>1. Information We Collect</h2>
+      <ul>
+        <li>Personal details (such as name, email address, or contact number) provided voluntarily when contacting us.</li>
+        <li>Non-personal information such as browser type, IP address, and usage data for analytics purposes.</li>
+        <li>Listing and inquiry data if you post or inquire about properties through our platform.</li>
+      </ul>
+      <h2>2. How We Use Your Information</h2>
+      <ul>
+        <li>Provide and improve our rental listing services.</li>
+        <li>Respond to user inquiries and requests.</li>
+        <li>Send important updates and notifications (only with your consent).</li>
+        <li>Prevent spam, fraud, and misuse of our platform.</li>
+      </ul>
+      <h2>3. Sharing of Information</h2>
+      <p>We do not sell, rent, or trade user information.</p>
+      <p>Your data may be shared only with:</p>
+      <ul>
+        <li>Verified property owners (for contact purposes).</li>
+        <li>Service providers assisting us in operating the website.</li>
+        <li>Law enforcement agencies if required by law.</li>
+      </ul>
+      <h2>4. Cookies and Analytics</h2>
+      <p>Our website may use cookies to enhance user experience and collect analytics data (such as visitor count, device type, etc.). Users can disable cookies through their browser settings at any time.</p>
+      <h2>5. Third-Party Links</h2>
+      <p>Our website may contain links to external websites (e.g., Telegram, Instagram, WhatsApp). We are not responsible for the privacy practices or content of those sites.</p>
+      <h2>6. Data Security</h2>
+      <p>We take reasonable measures to protect your personal information from unauthorized access, alteration, or disclosure. However, no online platform can guarantee 100% security.</p>
+      <h2>7. Your Rights</h2>
+      <ul>
+        <li>Request access or deletion of your personal information.</li>
+        <li>Withdraw consent for data use.</li>
+        <li>Contact us for any privacy-related concern.</li>
+      </ul>
+      <h2>8. Contact Us</h2>
+      <p>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a><br>Phone: +918275790157<br>Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">https://pune-Rooms.com</a></p>
+    ` + tail,
+
+    'Disclaimer.html': head('Disclaimer') + `
+      <h1>Disclaimer – Pune Rooms</h1>
+      <p>The information provided by Pune Rooms (https://pune-Rooms.com) is for general informational purposes only. While we strive to keep the information accurate and up to date, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of any listings, properties, or related information.</p>
+      <h2>1. No Ownership or Brokerage</h2>
+      <p>Pune Rooms is an online information-sharing platform only. We do not own, manage, or operate any of the properties listed on our website or Telegram/WhatsApp channels. All property details are provided by owners, agents, or third parties. Users are advised to verify all details independently before making any financial or personal commitments.</p>
+      <h2>2. User Responsibility</h2>
+      <p>Users are solely responsible for:</p>
+      <ul>
+        <li>Contacting property owners directly.</li>
+        <li>Verifying authenticity of listings and photos.</li>
+        <li>Ensuring that any financial transactions are made safely and with due diligence.</li>
+      </ul>
+      <h2>3. External Links</h2>
+      <p>Our website and associated social channels may contain links to third-party websites or platforms (e.g., Telegram, Instagram, WhatsApp). We have no control over the content, reliability, or availability of those external sites. The inclusion of any links does not imply endorsement or recommendation.</p>
+      <h2>4. No Liability</h2>
+      <p>Under no circumstances shall Pune Rooms, its team members, or affiliates be liable for any loss, damage, or inconvenience caused due to:</p>
+      <ul>
+        <li>Misleading or incorrect information shared by third parties.</li>
+        <li>Fraudulent activity by property owners or users.</li>
+        <li>Technical issues or downtime on our website or channels.</li>
+      </ul>
+      <h2>5. Consent</h2>
+      <p>By using our website and services, you consent to this Disclaimer and agree to its terms.</p>
+      <h2>6. Updates</h2>
+      <p>This Disclaimer may be updated periodically to reflect changes in law, content, or platform policy. We encourage users to review it regularly.</p>
+      <h2>7. Contact</h2>
+      <p>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a><br>Phone: +918275790157<br>Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">https://pune-Rooms.com</a></p>
+    ` + tail,
+
+    'Terms & Conditions.html': head('Terms & Conditions') + `
+      <h1>Terms and Conditions – Pune Rooms</h1>
+      <p>Welcome to Pune Rooms (https://pune-Rooms.com). By accessing or using our website, you agree to comply with and be bound by the following Terms and Conditions. Please read them carefully before using our services.</p>
+      <h2>1. Acceptance of Terms</h2>
+      <p>By visiting or using Pune Rooms, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree, please do not use our website or services.</p>
+      <h2>2. Services Overview</h2>
+      <p>Pune Rooms provides verified rental listings, PGs, flats, and hostels in Pune. We act as an information-sharing platform only and do not own or manage any properties listed on the website.</p>
+      <h2>3. User Responsibilities</h2>
+      <ul>
+        <li>Provide accurate and truthful information while using our website or contacting property owners.</li>
+        <li>Verify property details and authenticity before making any payments.</li>
+        <li>Do not misuse the platform or upload false, misleading, or illegal content.</li>
+      </ul>
+      <h2>4. Property Listings and Third-Party Links</h2>
+      <ul>
+        <li>Listings are shared for informational purposes only.</li>
+        <li>Pune Rooms is not responsible for any disputes, payments, or agreements between tenants and property owners.</li>
+        <li>The website may contain links to third-party platforms (e.g., Telegram, Instagram, WhatsApp) for extended listings. We are not responsible for the content or activities of these third-party sites.</li>
+      </ul>
+      <h2>5. No Brokerage Guarantee</h2>
+      <p>All listings shared via Pune Rooms are commission-free. We do not charge users or property owners any hidden fees for posting or accessing information.</p>
+      <h2>6. Intellectual Property</h2>
+      <p>All content, including text, design, and logos on Pune Rooms, are owned or licensed by Pune Rooms. Users are not allowed to copy, reproduce, or redistribute any content without permission.</p>
+      <h2>7. Limitation of Liability</h2>
+      <p>Pune Rooms is not liable for:</p>
+      <ul>
+        <li>Any false information posted by property owners or users.</li>
+        <li>Loss or damage caused by third-party links or external communications.</li>
+        <li>Any financial loss, scam, or misunderstanding between tenants and owners.</li>
+      </ul>
+      <h2>8. Modifications to Terms</h2>
+      <p>We may update or modify these Terms at any time without prior notice. Continued use of our website means you accept any revised terms.</p>
+      <h2>9. Termination</h2>
+      <p>We reserve the right to suspend or terminate user access if any activity violates our policies, laws, or community guidelines.</p>
+      <h2>10. Contact Us</h2>
+      <p>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a><br>Phone: +918275790157<br>Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">https://pune-Rooms.com</a></p>
+    ` + tail,
+
+    'Contact Us.html': head('Contact Us') + `
+      <h1>📞 Contact Us</h1>
+      <p>We’re here to help you find your perfect stay in Pune! Whether you’re looking for Rooms, flats, or PGs — our team is always ready to assist you.</p>
+      <p>🌐 Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">https://pune-Rooms.com</a><br>
+      ✉️ Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a><br>
+      📢 Telegram Channel: <a href="https://t.me/pune_Rooms_rental" target="_blank" rel="noopener">https://t.me/pune_Rooms_rental</a><br>
+      💬 WhatsApp Channel: <a href="https://whatsapp.com/channel/0029Va5AbLE9mrGjkA8vBV06" target="_blank" rel="noopener">WhatsApp Channel</a><br>
+      📱 Contact Number: +918275790157<br>
+      📍 Address: Flat No. 40, Narayan Peth, Pune – 411030</p>
+      <h2>🕒 Working Hours</h2>
+      <p>Monday – Saturday: 9:00 AM to 7:00 PM<br>Sunday: Closed</p>
+      <p>✨ We aim to respond to all queries within 24 hours.<br>Thank you for choosing Pune Rooms — your trusted partner for hassle-free room and PG rentals in Pune! 🏠</p>
+    ` + tail
+  };
+
+  function openDoc(name){
+    const html=docs[name];
+    if(!html) return;
+    const u=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    window.open(u,'_blank','noopener');
+  }
+
+  const titlesMap={
+    'Privacy Policy':'Privacy Policy.html',
+    'Disclaimer':'Disclaimer.html',
+    'Terms & Conditions':'Terms & Conditions.html',
+    'Terms and Conditions':'Terms & Conditions.html',
+    'Contact Us':'Contact Us.html'
+  };
+
+  Array.from(document.links)
+    .filter(a=>titlesMap[a.textContent.trim()])
+    .forEach(a=>{
+      if(a.dataset.legalNew) return;
+      a.dataset.legalNew='1';
+      a.href='#';
+      a.addEventListener('click',e=>{
+        e.preventDefault();
+        openDoc(titlesMap[a.textContent.trim()]);
+      });
+    });
+})();
+</script>
+
+<script>
+/* Fix dynamic legal pages (rebuild broken script, unify link handling) */
+(function(){
+  // Basic themed page builder
+  const stamp='Last Updated: '+new Date().toLocaleDateString('en-IN');
+  const css=`:root{--bg:#0e1012;--panel:#1c1f23;--text:#ececec;--accent:#4ac3ff}
+  body{margin:0;font:15px/1.6 system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);padding:48px 26px 90px;max-width:960px;margin:auto}
+  h1{margin:0 0 26px;font-size:38px;font-weight:700;letter-spacing:.5px}
+  h2{margin:34px 0 12px;font-size:22px;font-weight:600}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .back{position:fixed;top:14px;left:14px;background:var(--panel);border:1px solid #2b2f33;color:var(--text);padding:8px 14px;border-radius:10px;font-size:13px;text-decoration:none}
+  .back:hover{background:#23272b}
+  footer{margin-top:60px;font-size:12px;color:#a3a9af}
+  ul,ol{padding-left:22px}
+  p{max-width:840px}
+  .stamp{margin-top:34px;font-style:italic;color:#b5bcc2}`;
+  function page(title, html){
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>'
+      + title +' – Pune Rooms</title><meta name="viewport" content="width=device-width,initial-scale=1">'
+      + '<style>'+css+'</style></head><body>'
+      + '<a class="back" href="#" onclick="history.back();return false;" aria-label="Go back">.</a>'
+      + html + '<footer>'+stamp+'</footer></body></html>';
+  }
+
+  const docs={
+    'Privacy Policy': page('Privacy Policy', `
+      <h1>Privacy Policy – Pune Rooms</h1>
+      <p>Your privacy matters. This policy explains what we collect, how we use it, and your choices.</p>
+      <h2>Information Collected</h2>
+      <ul>
+        <li>Details you send (name, email, phone) when contacting us.</li>
+        <li>Technical data (IP, device, usage) for analytics & security.</li>
+        <li>Listing / inquiry metadata to improve platform relevance.</li>
+      </ul>
+      <h2>Use of Data</h2>
+      <ul>
+        <li>Operate and improve rental discovery.</li>
+        <li>Prevent abuse / fraud.</li>
+        <li>Respond to support requests.</li>
+      </ul>
+      <h2>Sharing</h2>
+      <p>No selling or trading of personal data. Limited sharing only for compliance or essential service operations.</p>
+      <h2>Cookies</h2>
+      <p>Basic analytics & preference cookies. You may disable in your browser.</p>
+      <h2>Your Rights</h2>
+      <ul><li>Request deletion / access</li><li>Withdraw consent</li><li>Report concerns</li></ul>
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a><br>Phone: +918275790157<br>Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">pune-Rooms.com</a></p>
+      <div class="stamp">Effective date: ${stamp}</div>
+    `),
+    'Disclaimer': page('Disclaimer', `
+      <h1>Disclaimer – Pune Rooms</h1>
+      <p>We are an information-sharing platform only. Verify listings independently before commitments.</p>
+      <h2>No Brokerage / Ownership</h2>
+      <p>We neither own nor manage properties listed.</p>
+      <h2>User Responsibility</h2>
+      <ul><li>Verify authenticity</li><li>Exercise caution with payments</li><li>Report suspicious activity</li></ul>
+      <h2>External Links</h2>
+      <p>Links to third-party platforms are outside our control.</p>
+      <h2>Liability</h2>
+      <p>No liability for inaccuracies, third-party content, fraud, downtime.</p>
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a> • Phone: +918275790157</p>
+      <div class="stamp">Updated: ${stamp}</div>
+    `),
+    'Terms & Conditions': page('Terms & Conditions', `
+      <h1>Terms and Conditions – Pune Rooms</h1>
+      <h2>Acceptance</h2>
+      <p>Use of the site means you accept these terms & Privacy Policy.</p>
+      <h2>Service Scope</h2>
+      <p>Listing aggregation & discovery. No guarantees of accuracy.</p>
+      <h2>User Duties</h2>
+      <ul><li>Provide truthful info</li><li>Avoid fraud / spam</li><li>Verify listings before payment</li></ul>
+      <h2>Intellectual Property</h2>
+      <p>Site design & branding protected. No unauthorized reuse.</p>
+      <h2>Liability Limits</h2>
+      <ul><li>No responsibility for false third-party data</li><li>No liability for disputes or losses</li></ul>
+      <h2>Modifications</h2>
+      <p>Terms may change; continued use = acceptance.</p>
+      <h2>Termination</h2>
+      <p>We may suspend access for violations.</p>
+      <h2>Contact</h2>
+      <p><a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a> • +918275790157</p>
+      <div class="stamp">Revision: ${stamp}</div>
+    `),
+    'Contact Us': page('Contact Us', `
+      <h1>Contact Us – Pune Rooms</h1>
+      <p>We help you discover commission-free rentals in Pune.</p>
+      <h2>Channels</h2>
+      <ul>
+        <li>Website: <a href="https://pune-Rooms.com" target="_blank" rel="noopener">pune-Rooms.com</a></li>
+        <li>Email: <a href="mailto:puneRooms@yahoo.com">puneRooms@yahoo.com</a></li>
+        <li>Telegram: <a href="https://t.me/pune_Rooms_rental" target="_blank" rel="noopener">t.me/pune_Rooms_rental</a></li>
+        <li>WhatsApp: <a href="https://whatsapp.com/channel/0029Va5AbLE9mrGjkA8vBV06" target="_blank" rel="noopener">Channel Link</a></li>
+        <li>Phone: +918275790157</li>
+        <li>Address: Flat 40, Narayan Peth, Pune – 411030</li>
+      </ul>
+      <h2>Hours</h2>
+      <p>Mon–Sat: 9:00–19:00 • Sun: Closed</p>
+      <p>Responses typically within 24h.</p>
+      <div class="stamp">${stamp}</div>
+    `)
+  };
+
+  function openDoc(name){
+    const html=docs[name];
+    if(!html) return;
+    const blob=new Blob([html],{type:'text/html'});
+    const url=URL.createObjectURL(blob);
+    window.open(url,'_blank','noopener');
+  }
+
+  const linkNames=['Privacy Policy','Disclaimer','Terms & Conditions','Terms and Conditions','Contact Us'];
+  document.querySelectorAll('a').forEach(a=>{
+    const txt=a.textContent.trim();
+    if(linkNames.includes(txt)){
+      // Normalize Terms and Conditions variant
+      const key = txt === 'Terms and Conditions' ? 'Terms & Conditions' : txt;
+      if(docs[key]){
+        a.setAttribute('role','button');
+        a.setAttribute('aria-label', key+' (opens in new window)');
+        a.href='#';
+        a.addEventListener('click',e=>{
+          e.preventDefault();
+          openDoc(key);
+        });
+      }
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  // Remove hero / big area box if present
+  const hero = [...document.querySelectorAll('h1')].find(h=>/Karvenagar/i.test(h.textContent));
+  if(hero){
+    const box = hero.closest('[style*="min-height"]') || hero.parentElement;
+    if(box) box.remove();
+  }
+
+  // New Karve Nagar listings dataset (order/structure altered)
+  const data = [
+    {id:1,title:"Sunrise Girls PG, Karve Nagar",type:"Girls PG",area:"Karve Nagar",badge:"Budget",price:8500,furnish:"Furnished",deposit:8500,vacancy:3,img:"./1.png",meta:"Close to Phoenix Marketcity",chips:["WiFi","24x7 Water","Hot Water","Daily Cleaning"],amenities:["Bed with Mattress","Locker","Fridge","Washing Machine","RO Water","Induction","Study Lamp","Charging Point"],contact:["+919900110006"]},
+    {id:2,title:"Greenway Boys Hostel, Karvenagar",type:"Boys PG",area:"Karve Nagar",badge:"Economy",price:{upper_bed:4500,lower_bed:5000},furnish:"Semi-Furnished",deposit:2000,vacancy:4,img:"./2.png",meta:"Near MIT College",chips:["Free WiFi","CCTV","Two-wheeler Parking"],amenities:["RO Water","Geyser","Lockers","Daily Cleaning","Study Table"],contact:["+919900110007"]},
+    {id:3,title:"Maple Residency PG, Karvenagar",type:"PG",area:"Karve Nagar",badge:"Value",price:7500,furnish:"Furnished",deposit:7500,vacancy:5,img:"./3.png",meta:"Near warje",chips:["24x7 Water","Electricity Included"],amenities:["Fridge","Washing Machine","Induction Stove","Study Lamp"],contact:["+919900110008"]},
+    {id:4,title:"Comfort Boys Hostel, Karvenagar",type:"Boys PG",area:"Karve Nagar",badge:"Central",price:{single_bed:6000},furnish:"Furnished",deposit:3000,vacancy:2,img:"./4.png",meta:"Near Karvenagar Market",chips:["WiFi","CCTV"],amenities:["RO Water","Geyser","Lockers","Daily Cleaning"],contact:["+919900110009"]},
+    {id:5,title:"Lotus Girls PG, Karvenagar",type:"Girls PG",area:"Karve Nagar",badge:"Premium",price:9200,furnish:"Furnished",deposit:9200,vacancy:2,img:"./5.png",meta:"Near Karve Nagar",chips:["WiFi","Study Table","Daily Cleaning"],amenities:["Bed & Mattress","Locker","Fridge","Washing Machine","Induction"],contact:["+919900110010"]},
+    {id:6,title:"Vista Boys Hostel, Karvenagar",type:"Boys PG",area:"Karve Nagar",badge:"Budget",price:{upper_bed:3800,lower_bed:4200},furnish:"Semi-Furnished",deposit:2000,vacancy:6,img:"./6.png",meta:"Near Karve Nagar Station",chips:["Two-wheeler Parking","WiFi"],amenities:["RO Water","Geyser","CCTV","Lockers"],contact:["+919900110011"]},
+    {id:7,title:"Harmony Girls PG, Karvenagar",type:"Girls PG",area:"Karve Nagar",badge:"Premium",price:11000,furnish:"Furnished",deposit:11000,vacancy:2,img:"./7.png",meta:"Near Karve Nagar Road",chips:["24x7 Water","WiFi","Electricity Included"],amenities:["Fridge","Washing Machine","RO Water","Study Table","Induction"],contact:["+919900110012"]},
+    {id:8,title:"Central Hub PG, Karvenagar",type:"PG",area:"Karve Nagar",badge:"Value",price:9800,furnish:"Furnished",deposit:5000,vacancy:4,img:"./8.png",meta:"Near Karve Nagar Market",chips:["WiFi","Study Lamp"],amenities:["Locker","Geyser","RO Water","Washing Machine"],contact:["+919900110013"]},
+    {id:9,title:"SafeStay Boys Hostel, Karvenagar",type:"Boys PG",area:"Karve Nagar",badge:"Central",price:{single_bed:5200},furnish:"Furnished",deposit:2500,vacancy:3,img:"./9.png",meta:"Near Karve Nagar Market",chips:["CCTV","Daily Cleaning"],amenities:["RO Water","Geyser","Lockers","Study Lamp"],contact:["+919900110014"]},
+    {id:10,title:"BlueSky Girls PG, Karve Nagar",type:"Girls PG",area:"Karve Nagar",badge:"Economy",price:6800,furnish:"Semi-Furnished",deposit:2000,vacancy:5,img:"./10.png",meta:"Near Karve Nagar Road",chips:["WiFi","Two-wheeler Parking"],amenities:["Washing Machine","Fridge","RO Water","Induction"],contact:["+919900110015"]},
+    {id:11,title:"Elite Boys Hostel, Karvenagar",type:"Boys PG",area:"Karve Nagar",badge:"Premium",price:{upper_bed:7000,lower_bed:7600},furnish:"Furnished",deposit:4000,vacancy:2,img:"./11.png",meta:"Close to FC College",chips:["WiFi","Quiet Environment"],amenities:["RO Water","Geyser","Study Table","Lockers","CCTV"],contact:["+919900110016"]}
+  ];
+
+  // Replace global listings
+  if(typeof listings!=='undefined'){
+    listings.length = 0;
+    data.forEach(o=>listings.push(o));
+  }else{
+    window.listings = data.slice();
+  }
+
+  // Enhanced card renderer (handles price objects)
+  window.listingCard = function(item){
+    const pricePart = (()=>{
+      if(typeof item.price === 'number'){
+        return '₹'+item.price.toLocaleString('en-IN')+'/mo';
+      }
+      if(item.price && typeof item.price === 'object'){
+        const vals = Object.values(item.price);
+        const min = Math.min(...vals);
+        const max = Math.max(...vals);
+        return '₹'+min.toLocaleString('en-IN')+(min!==max?'–₹'+max.toLocaleString('en-IN'):'')+'/mo';
+      }
+      return '';
+    })();
+    const contactNum = (item.contact && item.contact[0]) || '';
+    const chipHTML = (item.chips||[]).map(c=>'<span class="pill">'+c+'</span>').join('');
+    const amenHTML = (item.amenities||[]).map(a=>'<span class="pill">'+a+'</span>').join('');
+    return '<article class="card">'
+      + '<div class="thumb">'
+      + '<img src="'+item.img+'" alt="'+item.title+'" loading="lazy">'
+      + (item.badge?'<div class="badge">'+item.badge+'</div>':'')
+      + '<div class="price">'+pricePart+'</div>'
+      + '</div>'
+      + '<div class="body">'
+      + '<div class="title">'+item.title+'</div>'
+      + '<div class="meta">'+item.area+' • '+item.type+' • '+item.furnish+'</div>'
+      + (item.meta?'<div class="meta">'+item.meta+'</div>':'')
+      + '<div class="meta">Vacancy: '+(item.vacancy??'-')+' • Deposit: ₹'+(item.deposit?item.deposit.toLocaleString('en-IN'):'-')+'</div>'
+      + (chipHTML?'<div class="amenities">'+chipHTML+'</div>':'')
+      + '<div class="amenities">'+amenHTML+'</div>'
+      + '<div class="cta">'
+      + '<button class="btn ghost" onclick="alert(\'Saved\')">Save</button>'
+      + (contactNum?'<button class="btn" onclick="window.open(\'tel:'+contactNum+'\',\'_blank\')">Call</button>':'')
+      + (contactNum?'<button class="btn ghost" onclick="window.open(\'https://wa.me/'+contactNum.replace(/\\D/g,\'\')+'\',\'_blank\')">WhatsApp</button>':'')
+      + '</div>'
+      + '</div></article>';
+  };
+
+  // Re-render
+  if(typeof render==='function'){
+    render();
+    const rc=document.getElementById('resultsCount');
+    if(rc) rc.textContent='Showing '+listings.length+' Karve Nagar listings';
+  }
+})();
+</script>
+<style>
+  .social-footer-bar{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:26px;
+    padding:14px 18px;
+    background:rgba(20,22,24,.88);
+    backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.1);
+    z-index:1600;
+  }
+  .social-footer-bar a{
+    display:inline-flex;
+    width:34px;
+    height:34px;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    background:#1d1f22;
+    border:1px solid rgba(255,255,255,.12);
+    transition:.25s;
+  }
+  .social-footer-bar a:hover{
+    transform:translateY(-4px);
+    background:#262a2e;
+    border-color:rgba(255,255,255,.25);
+  }
+  .social-footer-bar img{
+    width:20px;
+    height:20px;
+    filter:invert(1) brightness(.9);
+    pointer-events:none;
+  }
+  @media (max-width:640px){
+    .social-footer-bar{gap:16px;padding:12px 14px}
+    .social-footer-bar a{width:30px;height:30px}
+    .social-footer-bar img{width:18px;height:18px}
+  }
+  body{padding-bottom:86px;} /* ensure content not hidden behind bar */
+
+.social-footer-bar{
+  position:static !important;
+  left:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  margin:50px auto 0;
+  max-width:1100px;
+  background:rgba(20,22,24,.88);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;
+}
+body{padding-bottom:0 !important;}
+</style>
+<script>
+(function(){
+  const bar=document.querySelector('.social-footer-bar');
+  const footer=document.querySelector('footer.wrap');
+  if(bar && footer){
+    footer.parentNode.insertBefore(bar, footer);
+  }
+})();
+</script></style>
+
+<!-- Social links below legal (privacy policy) ribbon -->
+<section class="legal-social-container" aria-label="Follow us">
+  <div class="legal-social-inner">
+    <a href="https://t.me/pune_Rooms_rental" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram">
+    </a>
+    <a href="https://www.instagram.com/pune_Rooms" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+    <a href="https://twitter.com/pune_Rooms" target="_blank" rel="noopener" aria-label="X">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+    </a>
+    <a href="https://www.facebook.com/share/19ajomS65D/" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+    </a>
+    <a href="https://www.threads.com/@pune_Rooms" target="_blank" rel="noopener" aria-label="Threads">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/threads.svg" alt="Threads">
+    </a>
+    <a href="https://whatsapp.com/channel/0029Va5AbLE9mrGjkA8vBV06" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+    </a>
+  </div>
+</section>
+<style>
+  .legal-social-container{
+    width:100%;
+    padding:34px 20px 10px;
+    background:linear-gradient(180deg,#121314,#0d0e10);
+  }
+  .legal-social-inner{
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    justify-content:center;
+  }
+  .legal-social-inner a{
+    width:46px;
+    height:46px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:#1c1f23;
+    border:1px solid rgba(255,255,255,.12);
+    transition:.25s;
+  }
+  .legal-social-inner a:hover{
+    transform:translateY(-4px);
+    background:#25292d;
+    border-color:rgba(255,255,255,.3);
+  }
+  .legal-social-inner img{
+    width:24px;
+    height:24px;
+    filter:invert(1) brightness(.9);
+    pointer-events:none;
+  }
+  @media (max-width:600px){
+    .legal-social-inner a{width:40px;height:40px}
+    .legal-social-inner img{width:20px;height:20px}
+  }
+</style></a></div></section>
+
+<style>
+  .social-color-icon{
+    width:100%;
+    height:100%;
+    display:inline-block;
+    background:#777;
+    mask:var(--icon-src) center / 60% no-repeat;
+    -webkit-mask:var(--icon-src) center / 60% no-repeat;
+    border-radius:inherit;
+    transition:.3s;
+  }
+  .social-color-icon.social-telegram{background:#26A5E4;}
+  .social-color-icon.social-instagram{
+    background:linear-gradient(135deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+  }
+  .social-color-icon.social-x{background:#000;}
+  .social-color-icon.social-facebook{background:#0866FF;}
+  .social-color-icon.social-threads{background:#000;}
+  .social-color-icon.social-whatsapp{background:#25D366;}
+  .legal-social-inner a{
+    background:#181a1d;
+  }
+  .legal-social-inner a:hover .social-color-icon{
+    transform:scale(1.15);
+  }
+</style>
+<script>
+(function(){
+  document.querySelectorAll('.legal-social-inner a').forEach(a=>{
+    const label=a.getAttribute('aria-label');
+    const img=a.querySelector('img');
+    if(!img || !label) return;
+    const src=img.getAttribute('src');
+    const span=document.createElement('span');
+    span.className='social-color-icon social-'+label.toLowerCase();
+    span.style.setProperty('--icon-src','url('+src+')');
+    a.replaceChild(span,img);
+  });
+})();
+</script>
+<style>
+/* Make X and Threads icons white */
+.social-color-icon.social-x,
+.social-color-icon.social-threads{
+  background:#fff !important;
+}
+</style>
+
+<script></script>
+<script>
+(function(){
+  // Enhanced contact handler with property-specific popup
+  window.showContactPopup = function(listing){
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s';
+    
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#1c1f23;border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:32px 28px;max-width:420px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.6);position:relative';
+    
+    const close = document.createElement('button');
+    close.textContent = '×';
+    close.style.cssText = 'position:absolute;top:12px;right:16px;background:transparent;border:none;color:#e0e0e0;font-size:32px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:.2s';
+    close.onmouseenter = ()=> close.style.background = 'rgba(255,255,255,.1)';
+    close.onmouseleave = ()=> close.style.background = 'transparent';
+    close.onclick = ()=> modal.remove();
+    
+    const title = document.createElement('h3');
+    title.textContent = listing.title;
+    title.style.cssText = 'margin:0 0 8px;font-size:20px;font-weight:600;color:#ececec;padding-right:30px';
+    
+    const meta = document.createElement('div');
+    meta.textContent = listing.area + ' • ' + listing.type;
+    meta.style.cssText = 'color:#9ca0a6;font-size:14px;margin-bottom:24px';
+    
+    const contactList = document.createElement('div');
+    contactList.style.cssText = 'display:flex;flex-direction:column;gap:12px';
+    
+    (listing.contact || []).forEach(num => {
+      const contactBox = document.createElement('div');
+      contactBox.style.cssText = 'background:#23262b;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px';
+      
+      const number = document.createElement('span');
+      number.textContent = num;
+      number.style.cssText = 'font-size:18px;font-weight:600;color:#ececec;letter-spacing:.3px';
+      
+      const btnGroup = document.createElement('div');
+      btnGroup.style.cssText = 'display:flex;gap:8px';
+      
+      const callBtn = document.createElement('button');
+      callBtn.textContent = '📞 Call';
+      callBtn.style.cssText = 'background:linear-gradient(180deg,#5d6064,#3c3e42);padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.15);color:#f1f1f1;font-weight:600;cursor:pointer;font-size:13px;transition:.2s';
+      callBtn.onclick = ()=> window.open('tel:'+num, '_self');
+      
+      const waBtn = document.createElement('button');
+      waBtn.textContent = '💬 WhatsApp';
+      waBtn.style.cssText = 'background:#25D366;padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.2);color:#fff;font-weight:600;cursor:pointer;font-size:13px;transition:.2s';
+      waBtn.onclick = ()=> window.open('https://wa.me/'+num.replace(/\D/g,''), '_blank');
+      
+      btnGroup.appendChild(callBtn);
+      btnGroup.appendChild(waBtn);
+      contactBox.appendChild(number);
+      contactBox.appendChild(btnGroup);
+      contactList.appendChild(contactBox);
+    });
+    
+    box.appendChild(close);
+    box.appendChild(title);
+    box.appendChild(meta);
+    box.appendChild(contactList);
+    modal.appendChild(box);
+    document.body.appendChild(modal);
+    
+    modal.onclick = e => { if(e.target === modal) modal.remove(); };
+  };
+  
+  // Update card renderer to use new popup
+  const originalCard = window.listingCard;
+  window.listingCard = function(item){
+    const html = originalCard(item);
+    return html.replace(
+      /onclick="alert\('Contact owner for[^']+'\)"/,
+      `onclick="showContactPopup(listings.find(l=>l.id===${item.id}))"`
+    );
+  };
+  
+  // Re-render cards
+  if(typeof render === 'function') render();
+})();
+</script>
+<style>
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
+
+<style>
+.header-inner .brand{
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  color:inherit !important;
+}
+.brand-pune{color:#ff2d2d;font-weight:800;}
+.brand-Rooms{color:#18c964;font-weight:800;margin-left:4px;}
+</style>
+<script>
+(function(){
+  const b=document.querySelector('.brand');
+  if(b) b.innerHTML='<span class="brand-pune">Pune</span><span class="brand-Rooms">Rooms</span>';
+})();
+</script>
+
+<script>
+(function(){
+  const logoImg = document.querySelector('.logo img');
+  if(logoImg){
+    logoImg.style.cursor = 'pointer';
+    logoImg.onclick = () => window.location.href = '../index.html';
+  }
+  const logoBox = document.querySelector('.logo');
+  if(logoBox){
+    logoBox.style.cursor = 'pointer';
+    logoBox.onclick = () => window.location.href = '../index.html';
+  }
+})();
+</script>
